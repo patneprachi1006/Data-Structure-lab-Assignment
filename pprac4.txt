@@ -1,0 +1,189 @@
+/*
+Name: Prachi Patne
+Roll no.: CO2115
+Title: Practical 4
+*/
+
+#include <stdio.h>
+#include <string.h>
+
+#define max 50
+#define size 100
+int main()
+{
+  char backstack[max][size];
+  char forwardstack[max][size];
+  
+  int backtop = -1;
+  int forwardtop = -1;
+  
+  char currentpage[size] = "Home";
+  char newpage[size];
+  
+  int choice;
+  do
+  {
+    printf("\n=====BROWSER NAVIGATION SYSTEM=====\n");
+    printf("1.Visit new page\n");
+    printf("2.Back navigation\n");
+    printf("3.Forward navigation\n");
+    printf("4.Display current page\n");
+    printf("5.Exit\n");
+    
+    printf("\n Enter your choice:");
+    scanf("%d",&choice); 
+    
+    switch(choice)
+    {
+      case 1:
+        printf("Enter new page:");
+        scanf("%s",newpage);
+        
+        //Store current page in back stack
+        backtop++;
+        strcpy(backstack[backtop],currentpage);
+        
+        //Make new page current
+        strcpy(currentpage,newpage);
+        
+        //Clear forward stack
+        forwardtop = -1;
+        
+        printf("Page visited: %s\n",currentpage);
+        break;
+        
+        case 2:
+        //Back navigation
+          if(backtop == -1)
+          {
+            printf("No previous page available\n");
+          }
+          else
+          {
+            
+            forwardtop++;
+            strcpy(forwardstack[forwardtop],currentpage);
+            
+            
+            strcpy(currentpage,backstack[backtop]);
+            backtop--;
+            printf("Back to: %s\n",currentpage);
+          }
+          break;
+          
+          case 3:
+          //Forward navigation
+          if(forwardtop == -1)
+          {
+            printf("No forward page available.\n");
+          }
+          else
+          {
+            
+            backtop++;
+            strcpy(backstack[backtop],currentpage);
+            
+            
+            strcpy(currentpage,forwardstack[forwardtop]);
+            forwardtop--;
+            printf("Forward to: %s\n",currentpage);
+          }
+          break;
+          
+          case 4:
+          //Display current page
+          printf("Current page: %s\n",currentpage);
+          break;
+          
+          case 5:
+          //Exiting the system
+          printf("Exiting browser navigation system.\n");
+          break;
+          
+          default:
+          printf("Invalid choice.\n");
+      }
+    }while(choice!=5);
+  return 0;
+}    
+   
+   
+/* output*/ 
+student@TCOERCL-VI-24:~$ cd co2115
+student@TCOERCL-VI-24:~/co2115$ cc pract4.c
+student@TCOERCL-VI-24:~/co2115$ ./a.out
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:1
+Enter new page:google
+Page visited: google
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:1
+Enter new page:github
+Page visited: github
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:1
+Enter new page:geeksforgeeks
+Page visited: geeksforgeeks
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:2
+Back to: github
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:3
+Forward to: geeksforgeeks
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:4
+Current page: geeksforgeeks
+
+=====BROWSER NAVIGATION SYSTEM=====
+1.Visit new page
+2.Back navigation
+3.Forward navigation
+4.Display current page
+5.Exit
+
+ Enter your choice:5
+Exiting browser navigation system.
+   
+          

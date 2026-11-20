@@ -1,0 +1,646 @@
+/*
+Name:Prachi Patne
+Roll no.:CO2115
+Title:Binary Search Tress Operations and Traversal
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int roll;
+    struct Node *left, *right;
+};
+
+struct Node* createNode(int roll) {
+    struct Node* newNode =
+        (struct Node*)malloc(sizeof(struct Node));
+
+    newNode->roll = roll;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Insert a student roll number
+struct Node* insert(struct Node* root, int roll) {
+    if (root == NULL)
+        return createNode(roll);
+
+    if (roll < root->roll)
+        root->left = insert(root->left, roll);
+    else if (roll > root->roll)
+        root->right = insert(root->right, roll);
+    else
+        printf("Duplicate roll number!\n");
+
+    return root;
+}
+
+// Search for a student
+struct Node* search(struct Node* root, int roll) {
+    if (root == NULL || root->roll == roll)
+        return root;
+
+    if (roll < root->roll)
+        return search(root->left, roll);
+
+    return search(root->right, roll);
+}
+
+// Find minimum value node
+struct Node* findMin(struct Node* root) {
+    while (root != NULL && root->left != NULL)
+        root = root->left;
+
+    return root;
+}
+
+// Delete a student roll number
+struct Node* deleteNode(struct Node* root, int roll) {
+    if (root == NULL)
+        return root;
+
+    if (roll < root->roll)
+        root->left = deleteNode(root->left, roll);
+    else if (roll > root->roll)
+        root->right = deleteNode(root->right, roll);
+    else {
+        if (root->left == NULL) {
+            struct Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL) {
+            struct Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+
+        struct Node* temp = findMin(root->right);
+        root->roll = temp->roll;
+        root->right = deleteNode(root->right, temp->roll);
+    }
+
+    return root;
+}
+
+// Inorder: Left, Root, Right
+void inorder(struct Node* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->roll);
+        inorder(root->right);
+    }
+}
+
+// Preorder: Root, Left, Right
+void preorder(struct Node* root) {
+    if (root != NULL) {
+        printf("%d ", root->roll);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+// Postorder: Left, Right, Root
+void postorder(struct Node* root) {
+    if (root != NULL) {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d ", root->roll);
+    }
+}
+
+int main() {
+    struct Node* root = NULL;
+    int choice, roll;
+
+    do {
+        printf("\n\n--- Student BST Menu ---\n");
+        printf("1. Add student\n");
+        printf("2. Remove student\n");
+        printf("3. Search student\n");
+        printf("4. Inorder traversal\n");
+        printf("5. Preorder traversal\n");
+        printf("6. Postorder traversal\n");
+        printf("7. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter roll number: ");
+                scanf("%d", &roll);
+                root = insert(root, roll);
+                break;
+
+            case 2:
+                printf("Enter roll number to delete: ");
+                scanf("%d", &roll);
+
+                if (search(root, roll) != NULL) {
+                    root = deleteNode(root, roll);
+                    printf("Student deleted successfully.\n");
+                } else {
+                    printf("Student not found.\n");
+                }
+                break;
+
+            case 3:
+                printf("Enter roll number to search: ");
+                scanf("%d", &roll);
+
+                if (search(root, roll) != NULL)
+                    printf("Student found.\n");
+                else
+                    printf("Student not found.\n");
+                break;
+
+            case 4:
+                printf("Inorder: ");
+                inorder(root);
+                break;
+
+            case 5:
+                printf("Preorder: ");
+                preorder(root);
+                break;
+
+            case 6:
+                printf("Postorder: ");
+                postorder(root);
+                break;
+
+            case 7:
+                printf("Exiting program.\n");
+                break;
+
+            default:
+                printf("Invalid choice.\n");
+        }
+    } while (choice != 7);
+
+    return 0;
+}
+
+
+
+
+
+
+student@TCOERCL-VI-24:~$ cd co2115
+student@TCOERCL-VI-24:~/co2115$ cc pract6.c
+student@TCOERCL-VI-24:~/co2115$ ./a.out
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 1
+Enter roll number: 23
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 67
+Invalid choice.
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 1 
+Enter roll number: 12
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 1
+Enter roll number: 55
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 1
+Enter roll number: 6
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 2
+Enter roll number to delete: 55
+Student deleted successfully.
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 3
+Enter roll number to search: 67
+Student not found.
+
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 4
+Inorder: 6 12 23 
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 5
+Preorder: 23 12 6 
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 6
+Postorder: 6 12 23 
+
+--- Student BST Menu ---
+1. Add student
+2. Remove student
+3. Search student
+4. Inorder traversal
+5. Preorder traversal
+6. Postorder traversal
+7. Exit
+Enter your choice: 7
+Exiting program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

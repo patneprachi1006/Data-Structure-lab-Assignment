@@ -1,0 +1,184 @@
+/*
+Name: Prachi Patne 
+Roll no.:CO2115
+Tile:Social network connectivity using graph traversal
+*/
+
+#include<stdio.h>
+#define max 20
+int graph[max][max];
+int visited[max];
+int n;
+
+void addconnection(int u,int v)
+{
+  graph[u][v]=1;
+  graph[v][u]=1;
+  printf("Connection added successfully.");
+}
+
+ void BFS(int start)
+ {
+  int queue[max],front=0,rear=0;
+  int i;
+  for(i=0;i<n;i++)
+  visited[start]=1;
+  
+  queue[rear++]=start;
+  visited[start]=1;
+  
+  printf("BFS traversal:");
+  while(front<rear)
+  {
+    int current=queue[front++];
+    printf("%d",current);
+    for(i=0;i<n;i++)
+    {
+      if(graph[current][i]==1 && !visited[i])
+      {
+        queue[rear++]=i;
+        visited[i]=1;
+      }
+    }
+  }
+  printf("\n");
+}
+
+void DFS(int vertex)
+{
+  int i;
+  visited[vertex]=1;
+  printf("%d",vertex);
+  for(i=0;i<n;i++)
+  {
+    if(graph[vertex][i]==1&&!visited[i])
+    DFS(i);
+  }
+}
+
+int main()
+{
+  int choice,u,v,start,i;
+  printf("Enter number of users:");
+  scanf("%d",&n);
+  
+  for(int i=0;i<n;i++)
+    for(int j=0;j<n;j++)
+      graph[i][j]=0;
+      
+  while(1)
+  {
+    printf("\n 1.Add connection");
+    printf("\n 2.BFS traversal");
+    printf("\n 3.DFS traversal");
+    printf("\n 4.Exit");
+    printf("\n Enter your choice:");
+    scanf("%d",&choice);
+    
+    switch(choice)
+    {
+      case 1:
+      printf("Enter two users numbers(0 to %d):",n-1);
+      scanf("%d %d",&u,&v);
+      
+      if(u>=0 && u<n && v>=0 && v<n)
+        addconnection(u,v);
+      else
+        printf("Invalid user number\n");
+      break;
+      
+      case 2:
+      printf("Enter starting user:");
+      scanf("%d",&start);
+      
+      if(start>=0 && start<n)
+        BFS(start);
+      else
+        printf("Invalid user number\n");
+      break;
+      
+      case 3:
+      printf("Enter starting user:");
+      scanf("%d",&start);
+      
+      if(start>=0 && start<n)
+      {
+        for(i=0;i<n;i++)
+        visited[i]=0;
+        
+        printf("DFS traversal:");
+        DFS(start);
+        printf("\n");
+      }
+      else
+        printf("Invalid user number");
+      break;
+      
+      case 4:
+      return 0;
+      
+      default:
+      printf("Invalid choice");
+    }
+  }
+  return 0;
+ } 
+ 
+ 
+ student@TCOERCL-VI-24:~$ cd co2115
+student@TCOERCL-VI-24:~/co2115$ cc pract7.c
+student@TCOERCL-VI-24:~/co2115$ ./a.out
+Enter number of users:5
+
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:1
+Enter two users numbers(0 to 4):0 1
+Connection added successfully.
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:1
+Enter two users numbers(0 to 4):0 2
+Connection added successfully.
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:1 
+Enter two users numbers(0 to 4):0 3
+Connection added successfully.
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:1 
+Enter two users numbers(0 to 4):0 4
+Connection added successfully.
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:2
+Enter starting user:0
+BFS traversal:01234
+
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:3
+Enter starting user:0
+DFS traversal:01234
+
+ 1.Add connection
+ 2.BFS traversal
+ 3.DFS traversal
+ 4.Exit
+ Enter your choice:4
+
+        
+    

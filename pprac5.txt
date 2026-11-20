@@ -1,0 +1,220 @@
+/*
+Name: Prachi Patne
+Roll no.:CO2115
+Title:Implement a hospital Patient Registration System Using Queue
+*/
+
+#include<stdio.h>
+#include<string.h>
+
+#define max 50
+struct patient
+{
+  int patient_ID;
+  char arrival_time[20];
+};
+struct patient queue[max];
+int front=-1;
+int rear=-1;
+
+//1.Add patient
+void addPatient()
+{
+  int id;
+  char time[20];
+  if(rear==max-1)
+  {
+    printf("\n Queue is full\n");
+    return;
+  }
+  printf("Enter patient ID:");
+  scanf("%d",&id);
+  printf("Enter arrival time:");
+  scanf("%s",time);
+  
+  if(front==-1)
+  front=0;
+  rear++;
+  queue[rear].patient_ID = id;
+  strcpy(queue[rear].arrival_time,time);
+  printf("\n Patient added successfully");
+}
+  
+//2.Attend patient
+void attendPatient()
+{
+  if(front==-1||front>rear)
+  {
+    printf("\n As queue is empty then there is no patient to attend.");
+    return;
+  }
+  printf("\n Patient attend:");
+  printf("Patient ID:%d\n",queue[front].patient_ID);
+  printf("Arrival time:%s\n",queue[front].arrival_time);
+  front++;
+  if(front>rear)
+  {
+    front=-1;
+    rear=-1;
+  }
+}
+
+//3.View patients
+void viewPatients()
+{
+  int i;
+  if(front==-1)
+  {
+    printf("\n No patients are waiting.");
+    return;
+  }
+  printf("\n-----patients waiting in queue-----");
+  for(i=front;i<=rear;i++)
+  {
+    printf("Patient ID:%d\t Arrival Time:%s\n",queue[i].patient_ID,queue[i].arrival_time);
+  }
+}
+
+//4.Check queue empty
+void isQueueEmpty()
+{
+  if(front==-1)
+  printf("\n Queue is empty.");
+  else
+  printf("\n Queue is not empty.");
+}
+
+int main()
+{
+  int choice;
+  do
+  {
+    printf("\n==========Menu Display==========\n");
+    printf("HOSPITAL PATIENT REGISTRATION SYSTEM.\n");
+    printf("1.Add patient.\n");
+    printf("2.Attend patient.\n");
+    printf("3.View patients.\n");
+    printf("4.Check queue empty.\n");
+    printf("5.Exit.\n");
+    
+    printf("Enter your choice:\n");
+    scanf("%d",&choice);
+    
+    switch(choice)
+    {
+      case 1:
+      addPatient();
+      break;
+      
+      case 2:
+      attendPatient();
+      break;
+      
+      case 3:
+      viewPatients();
+      break;
+      
+      case 4:
+      isQueueEmpty();
+      break;
+      
+      case 5:
+      printf("Exiting the system.\n");
+      break;
+      
+      default:
+      printf("\n Invalid choice.");
+    }
+  }while(choice!=5);
+  return 0;
+}   
+
+
+student@TCOERCL-VI-24:~/co2115$ ./a.out
+
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+1
+Enter patient ID:101
+Enter arrival time:12:34
+
+ Patient added successfully
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+1
+Enter patient ID:102
+Enter arrival time:3:50
+
+ Patient added successfully
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+1
+Enter patient ID:103
+Enter arrival time:9:43
+
+ Patient added successfully
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+2
+
+ Patient attend:Patient ID:101
+Arrival time:12:34
+
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+3
+
+-----patients waiting in queue-----Patient ID:102	 Arrival Time:3:50
+Patient ID:103	 Arrival Time:9:43
+
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+4
+
+ Queue is not empty.
+==========Menu Display==========
+HOSPITAL PATIENT REGISTRATION SYSTEM.
+1.Add patient.
+2.Attend patient.
+3.View patients.
+4.Check queue empty.
+5.Exit.
+Enter your choice:
+5
+Exiting the system.
